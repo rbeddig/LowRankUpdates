@@ -1,0 +1,23 @@
+cmake \
+-DCMAKE_INSTALL_PREFIX=. \
+-DCMAKE_BUILD_TYPE=RELEASE \
+-DTrilinos_ENABLE_ALL_PACKAGES=FALSE \
+-DTrilinos_ENABLE_Amesos=ON \
+-DTrilinos_ENABLE_Epetra=ON                      \
+-DTrilinos_ENABLE_Ifpack=ON                      \
+-DTrilinos_ENABLE_AztecOO=ON                     \
+-DTrilinos_ENABLE_Teuchos=ON                     \
+-DTrilinos_ENABLE_ML=ON                          \
+-DTrilinos_ENABLE_COMPLEX_DOUBLE=ON              \
+-DTrilinos_ENABLE_COMPLEX_FLOAT=ON               \
+-DTrilinos_ENABLE_Zoltan=ON                      \
+-DTrilinos_VERBOSE_CONFIGURE=OFF                 \
+-DTPL_ENABLE_MPI=ON                             \
+-DBUILD_SHARED_LIBS=ON                           \
+-DCMAKE_VERBOSE_MAKEFILE=OFF                     \
+-DCMAKE_BUILD_TYPE=RELEASE                       \
+-DBLAS_LIBRARY_NAMES=blas                        \
+-DBLAS_LIBRARY_DIRS=/path/to/blas/lib       \
+-DLAPACK_LIBRARY_NAMES=lapack                    \
+-DLAPACK_LIBRARY_DIRS=/path/to/lapack/lib       \
+../

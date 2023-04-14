@@ -1,0 +1,48 @@
+/*!
+	@mainpage Mathematical Outline
+	
+        The current prototype is a buoyancy Boussinesq system, i.e., an incompressible Navier-Stokes system with Coriolis force that is driven through density variations caused by temperature changes.
+        
+        This code is meant to be used for reproducing the results shown in [1].
+        The goal of this code is to test different block preconditioners with low-rank updates for the Schur complement preconditioner.
+
+	The discretized Navier-Stokes equations form saddle-point systems of the form 
+
+	\f[
+	\begin{pmatrix}
+		A & B^T \\
+		B & 0
+	\end{pmatrix}
+	\begin{pmatrix}
+		\mathbf{u} \\ p
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+		f \\ 0
+	\end{pmatrix}.
+	\f]
+	
+	We use a right block triangular preconditioner for the iterative solution of the saddle-point systems 
+	\f[
+	P  = \begin{pmatrix}
+		\widehat{A}^{-1} & \widehat{A}^{-1} B^T \widehat{S}^{-1} \\
+		0                & -\widehat{S}^{-1}
+	\end{pmatrix}
+	\f]
+	where \f$ \widehat{A}^{-1} \approx A^{-1} \f$ and \f$ \widehat{S}^{-1} \approx S^{-1} \f$ with the Schur complement \f$ S = B A^{-1} B^T \in \mathbb{R}^{n_p \times n_p}\f$.
+
+	We analyze low-rank updates for the Schur complement preconditioner of the form 
+	\f[
+        \widehat{S}^{-1}_\mathrm{upd} = \widehat{S}^{-1} (\mathrm{I} + U_r (D_r - V^T_r U_r)^{-1} V^T_r)
+	\f] 
+        
+	where \f$U_r, V_r \in \mathbb{R}^{n_p \times r}\f$, \f$D_r \in \mathbb{R}^{r \times r}\f$ are obtained from a randomized singular value 
+	decomposition of the matrix \f$ E = \mathrm{I} - S \widehat{S}^{-1} \approx U_r D_r V_r^T\f$.
+
+
+	### References: 
+
+        [1] R.S. Beddig, J. Behrens, S. Le Borne, K. Simon. An error-based low-rank correction for pressure Schur complement preconditioners. 
+	    Proceedings of the YRM & CSE Workshop on Modeling, Simulation & Optimization of Fluid Dynamic Applications, March 21-24, 2022.
+	
+*/

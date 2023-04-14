@@ -1,0 +1,52 @@
+@book{ElmSW14,
+	author    = {Elman, Howard and Silvester, David and Wathen, Andy},
+	title     = {{Finite Elements and Fast Iterative Solvers: with Applications in Incompressible Fluid Dynamics}},
+	publisher = {Oxford University Press},
+	year      = {2014},
+	month     = {06},
+	abstract  = {{The subject of this book is the efficient solution of partial differential equations (PDEs) that arise when modelling incompressible fluid flow. The first part (Chapters 1 through 5) covers the Poisson equation and the Stokes equations. For each PDE, there is a chapter concerned with finite element discretization and a companion chapter concerned with efficient iterative solution of the algebraic equations obtained from discretization. Chapter 5 describes the basics of PDE-constrained optimization. The second part of the book (Chapters 6 to 11) is a more advanced introduction to the numerical analysis of incompressible flows. It starts with four chapters on the convection–diffusion equation and the steady Navier–Stokes equations, organized by equation with a chapter describing discretization coupled with a companion concerned with iterative solution algorithms. The book concludes with two chapters describing discretization and solution methods for models of unsteady flow and buoyancy-driven flow.}},
+	isbn      = {9780199678792},
+	doi       = {10.1093/acprof:oso/9780199678792.001.0001},
+	url       = {https://doi.org/10.1093/acprof:oso/9780199678792.001.0001}
+}
+
+
+@article{MarRT11,
+	author   = {Martinsson, Per-Gunnar and Rokhlin, Vladimir and Tygert, Mark},
+	journal  = {Appl Comput Harmon A},
+	title    = {A Randomized Algorithm for the Decomposition of Matrices},
+	year     = {2011},
+	issn     = {1063-5203},
+	number   = {1},
+	pages    = {47--68},
+	volume   = {30},
+	abstract = {Given an m×n matrix A and a positive integer k, we describe a randomized procedure for the approximation of A with a matrix Z of rank k. The procedure relies on applying AT to a collection of l random vectors, where l is an integer equal to or slightly greater than k; the scheme is efficient whenever A and AT can be applied rapidly to arbitrary vectors. The discrepancy between A and Z is of the same order as lm times the (k+1)st greatest singular value σk+1 of A, with negligible probability of even moderately large deviations. The actual estimates derived in the paper are fairly complicated, but are simpler when l−k is a fixed small nonnegative integer. For example, according to one of our estimates for l−k=20, the probability that the spectral norm ‖A−Z‖ is greater than 10(k+20)mσk+1 is less than 10−17. The paper contains a number of estimates for ‖A−Z‖, including several that are stronger (but more detailed) than the preceding example; some of the estimates are effectively independent of m. Thus, given a matrix A of limited numerical rank, such that both A and AT can be applied rapidly to arbitrary vectors, the scheme provides a simple, efficient means for constructing an accurate approximation to a singular value decomposition of A. Furthermore, the algorithm presented here operates reliably independently of the structure of the matrix A. The results are illustrated via several numerical examples.},
+	doi      = {10.1016/j.acha.2010.02.003},
+	file     = {:random-svd/MarRT11.pdf:PDF},
+	keywords = {Randomized, Algorithm, Low rank, Matrix, SVD, Lanczos},
+	url      = {https://www.sciencedirect.com/science/article/pii/S1063520310000242}
+}
+
+
+@article{HalMT11,
+	author   = {Halko, N. and Martinsson, P. G. and Tropp, J. A.},
+	journal  = {SIAM Rev.},
+	title    = {Finding Structure with Randomness: Probabilistic Algorithms for Constructing Approximate Matrix Decompositions},
+	year     = {2011},
+	number   = {2},
+	pages    = {217--288},
+	volume   = {53},
+	abstract = {Low-rank matrix approximations, such as the truncated singular value decomposition and the rank-revealing QR decomposition, play a central role in data analysis and scientific computing. This work surveys and extends recent research which demonstrates that randomization offers a powerful tool for performing low-rank matrix approximation. These techniques exploit modern computational architectures more fully than classical methods and open the possibility of dealing with truly massive data sets. This paper presents a modular framework for constructing randomized algorithms that compute partial matrix decompositions. These methods use random sampling to identify a subspace that captures most of the action of a matrix. The input matrix is then compressed—either explicitly or implicitly—to this subspace, and the reduced matrix is manipulated deterministically to obtain the desired low-rank factorization. In many cases, this approach beats its classical competitors in terms of accuracy, robustness, and/or speed. These claims are supported by extensive numerical experiments and a detailed error analysis. The specific benefits of randomized techniques depend on the computational environment. Consider the model problem of finding the k dominant components of the singular value decomposition of an \$m \times n\$ matrix. (i) For a dense input matrix, randomized algorithms require \$\bigO(mn \log(k))\$ floating-point operations (flops) in contrast to \$ \bigO(mnk)\$ for classical algorithms. (ii) For a sparse input matrix, the flop count matches classical Krylov subspace methods, but the randomized approach is more robust and can easily be reorganized to exploit multiprocessor architectures. (iii) For a matrix that is too large to fit in fast memory, the randomized techniques require only a constant number of passes over the data, as opposed to \$\bigO(k)\$ passes for classical algorithms. In fact, it is sometimes possible to perform matrix approximation with a single pass over the data.},
+	doi      = {10.1137/090771806},
+	eprint   = {https://doi.org/10.1137/090771806},
+	file     = {:random-svd/HalMT11.pdf:PDF},
+	url      = {https://doi.org/10.1137/090771806}
+}
+
+
+@misc{proceedings,
+	author = {Beddig, Rebekka Salome and Behrens, Jörn and Le Borne, Sabine and Simon, Konrad},
+	pages  = {},
+	title  = {An error-based low-rank correction for pressure Schur complement preconditioners},
+	note   = {Proceedings of the YRM & CSE Workshop on Modeling, Simulation & Optimization of Fluid Dynamic Applications, March 21-24, 2022}
+}

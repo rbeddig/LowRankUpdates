@@ -1,0 +1,58 @@
+# Ingnore generated documentation
+documentation/
+.vscode/
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+/build/
+source/BoussinesqPlanet
+source/BoussinesqRepeatedUpdate
+source/BoussinesqUpdateRank
+
+# Text files
+*.txt
+*.log
+*.dat
+*.tex
+
+# CMake files
+*CMakeFiles*
+CMakeCache.txt
+Makefile
+*cmake
+
+# Output
+*data-output*
+
+
+

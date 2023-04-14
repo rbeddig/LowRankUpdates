@@ -1,0 +1,211 @@
+subsection Boussinesq Model
+
+	subsection Mesh parameters
+		set initial global refinement = 2
+		
+		# Sets the domain geometry to cuboid. All directions are periodic apart from
+   		# the z-direction. This is useful for debugging and later to restrict global
+		# simulations to a full 3D column.
+		set cuboid geometry = true
+	end
+	
+	subsection Reference quantities		
+		# Standard: 10 [m/s]
+		#set velocity = 0.01
+		set velocity = 0.01
+		
+		# Standard: 1e+4 [m]
+		#set length = 1
+		set length = 1
+		
+		# Standard: 273.15 [K]
+		#set temperature = 273.15
+		set temperature = 2
+		
+		# Standard: 5 [K]
+		#set temperature change = 5
+		set temperature change = 0.5
+	end
+
+	set space dimension = 3
+
+	set final time = 0.00001
+	set time step = 0.005
+	
+	# Flag to adapt time step by recomputing the CFL number
+	set adapt time step = false
+
+	set nse theta = 0.5
+	set nse velocity degree = 2
+	
+	set correct pressure to zero mean = false
+	set correct pressure rhs = false
+	set remove nullspace = true
+
+        # Boundary conditions (velocity)
+	set only dirichlet boundary = false 
+
+	# Use Picard iteration or move the advetion term to the rhs
+	set use picard = true #false
+
+	# Preconditioners
+
+	# for upper left block
+	# jacobi|amg|ilu
+	set block00 preconditioner = ilu
+	# 0.024 seems to be near the optimal threshold
+	set AMG aggregation threshold = 0.024
+	# choose matrix for the preconditioner for the upper left block (velocity mass matrix or nse (preconditioner) matrix)
+	set use Mu = false
+
+	# Schur complement
+	# bfbt|orig
+	set schur complement preconditioner = orig
+	set bfbt aggregation threshold = 0.02
+	# only AMG for the Poisson solves, no CG
+	set only amg = false
+	# use IC(0) for the Poisson solves
+	set use ic = true
+	# relative tolerance for the Poisson solves
+	set tolerance = 1e-2
+	# precondition CG
+	set precondition poisson = false
+
+	# BFBt parameters
+	set bfbt_scale = true
+	set scale_with_velocity_mass = true
+
+
+	# for low-rank updates
+	# E = I - weight * S \hat{S}^{-1}
+	set weight = 1.0
+	set svd solver = random
+	set rank = 0
+	set number = 1 # number of updates in a row
+
+	
+	# only valid for standard H1-L2 elements
+	set use locally conservative discretization = false
+	
+	# This is only for debugging purposes
+	set solver diagnostics level = 1 #2
+	
+	set use schur complement solver = false
+	set use direct solver = false
+	
+	# How many temperature steps should be done during one
+	# NSE step with a time step that is admissible under
+	# CFL constraints
+	set NSE solver interval = 1
+
+	set temperature theta = 0.5
+	set temperature degree = 2
+	
+	# Base name of outputfile
+  	set filename output = boussinesq-commutator
+  	
+  	# Name of outputfile without ending
+  	set dirname output = data-output
+  	
+  	# Output some info on MPI processes
+	# (Each MPI process says hello. 
+	# Careful with many processes)
+	set hello from cluster = true
+end
+
+
+subsection Physical Constants
+
+	# Average atmosphere pressure
+	#
+	# Standard: 1.01325e+5 [Pa]
+	set average atm pressure = 1.01325e+5
+	
+	# Planetary angular velocity
+	#
+	# Standard: 7.272205e-5 [1/s]
+  	set omega = 7.272205e-5
+  		
+	# Air density
+	#
+	# Standard: 1.29 [kg / m^3]
+	set density = 1.29
+
+	# Universal gas constant.
+	#
+	# Unit: [J/(mol*K)]
+    # Standard: 8.31446261815324 
+    set universal gas constant = 8.31446261815324
+
+    # Specific gas constant of dry air.
+    #
+    # Unit: [J/(kg*K)]     
+    # Standard: 287
+    set specific gas constant dry = 287
+    
+    # Thermal expansion coefficient.
+    #
+    # Unit: [1/K]     
+    # Standard: 1/273.15 ~= 0.003661 (ideal gas)
+    set expansion coefficient = 0.003661
+
+    # Dynamic viscosity (eta or mu) of air at bottom reference
+    # temperature.     
+    #
+    # Unit: [kg/(m*s)]
+    # Standard: 1.82e-5
+    set dynamic viscosity = 1.82e-5
+
+    # Specific heat capacity of air under constant pressure.
+    #
+    # Unit: [J / (K*kg)]     
+    # Standard: 1.005
+    set specific heat p = 1.005
+
+    # Specific heat capacity of air under isochoric changes of state.
+    #
+    # Unit: [J / (K*kg)]
+    # Standard: 0.718
+    set specific heat v = 0.718
+
+    # Thermal conductivity (kappa, k or lambda) of air at bottom reference
+    # temperature.
+    #
+    # Unit: [W/(m*K)]
+    # Standard: 2.62e-2
+    set thermal conductivity = 2.62e-2
+
+    # A good part of the earth's heat loss through the surface is due
+    # to the decay of radioactive elements (uranium, thorium,
+    # potassium).  
+    #
+    # Unit: [W / kg]
+    # Standard: 7.4e-12
+    set radiogenic heating = 7.4e-12
+
+    # Gravity constant.
+    #
+    # Unit: [m/s^2]
+    # Standard: 9.81
+    set gravity constant = 9.81
+
+    # Speed of sound.
+    #
+    # Unit: [m/s]
+    # Standard: 331.5
+    set speed of sound = 331.5
+
+    # Height of atmosphere (up to mesosphere)
+    #
+    # Unit: [m]
+    # Standard: 1.0e+5
+    #set atm height = 0.1
+    set atm height = 0.1
+
+    # Inner earth radius
+    #
+    # Unit: [m]     
+    # Standard:  6.371000e+6
+    #set R0 = 2
+    set R0 = 2
+end

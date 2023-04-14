@@ -1,0 +1,216 @@
+#!/bin/bash
+
+# # Name of parameter file 
+filename="data/aqua_planet_commutator.prm"
+outputfile="results_for_table2.txt"
+
+solvertype="false"
+sed -i "s/schur complement solver = .*/schur complement solver = $solvertype/" $filename
+ 
+ 
+##### Test Navier-Stokes system ################################################
+# Set triangulation parameters
+# Set reference parameters
+vref="0.01"
+lref="1"
+sed -i "s/velocity = .*/velocity = $vref/" $filename
+sed -i "s/length = .*/length = $lref/" $filename
+
+# Set solver parameters
+block00prec="ilu"
+amgoption="false"
+tol="1e-2"
+precondition="false"
+useic="true"
+sed -i "s/block00 preconditioner = .*/block00 preconditioner = $block00prec/" $filename
+sed -i "s/bfbt only amg = .*/bfbt only amg = $amgoption/" $filename
+sed -i "s/tolerance = .*/tolerance = $tol/" $filename
+sed -i "s/precondition poisson = .*/precondition poisson = $precondition/" $filename
+sed -i "s/use ic = .*/use ic = $useic/" $filename
+
+# Shell, Picard, LSC
+cuboid="false"
+refinement="3"
+timestep="0.0005"
+picard="true"
+sed -i "s/cuboid geometry = .*/cuboid geometry = $cuboid/" $filename
+sed -i "s/global refinement = .*/global refinement = $refinement/" $filename
+sed -i "s/set time step = .*/set time step = $timestep/" $filename
+sed -i "s/use picard = .*/use picard = $picard/" $filename
+
+weight="1.0"
+sed -i "s/set weight = .*/set weight = $weight/" $filename
+schurprec="bfbt"
+sed -i "s/schur complement preconditioner = .*/schur complement preconditioner = $schurprec/" $filename
+bfbt_scale="true" 
+scale_with_velocity_mass="true"
+sed -i "s/bfbt_scale = .*/bfbt_scale = $bfbt_scale/" $filename 
+sed -i "s/scale_with_velocity_mass = .*/scale_with_velocity_mass = $scale_with_velocity_mass/" $filename
+
+echo "############################################" >> $outputfile
+echo "#######   Test update:       ###############" >> $outputfile
+echo "############################################" >> $outputfile
+echo "Cube: $cuboid, refinement level: $refinement, time step size: $timestep, Picard linearization: $picard, scaling: $weight" >> $outputfile
+mpirun -np 1 source/BoussinesqRepeatedUpdate -p $filename >> $outputfile
+
+# Shell, Picard, SIMPLE
+cuboid="false"
+refinement="3"
+timestep="0.0005"
+picard="true"
+sed -i "s/cuboid geometry = .*/cuboid geometry = $cuboid/" $filename
+sed -i "s/global refinement = .*/global refinement = $refinement/" $filename
+sed -i "s/set time step = .*/set time step = $timestep/" $filename
+sed -i "s/use picard = .*/use picard = $picard/" $filename
+
+weight="1.0"
+sed -i "s/set weight = .*/set weight = $weight/" $filename
+schurprec="orig"
+sed -i "s/schur complement preconditioner = .*/schur complement preconditioner = $schurprec/" $filename
+
+echo "############################################" >> $outputfile
+echo "#######   Test update:       ###############" >> $outputfile
+echo "############################################" >> $outputfile
+echo "Cube: $cuboid, refinement level: $refinement, time step size: $timestep, Picard linearization: $picard, scaling: $weight" >> $outputfile
+mpirun -np 1 source/BoussinesqRepeatedUpdate -p $filename >> $outputfile
+
+# Cube, Picard, LSC
+cuboid="true"
+refinement="4"
+timestep="0.005"
+picard="true"
+sed -i "s/cuboid geometry = .*/cuboid geometry = $cuboid/" $filename
+sed -i "s/global refinement = .*/global refinement = $refinement/" $filename
+sed -i "s/set time step = .*/set time step = $timestep/" $filename
+sed -i "s/use picard = .*/use picard = $picard/" $filename
+
+weight="1.0"
+sed -i "s/set weight = .*/set weight = $weight/" $filename
+schurprec="bfbt"
+sed -i "s/schur complement preconditioner = .*/schur complement preconditioner = $schurprec/" $filename
+bfbt_scale="true" 
+scale_with_velocity_mass="true"
+sed -i "s/bfbt_scale = .*/bfbt_scale = $bfbt_scale/" $filename 
+sed -i "s/scale_with_velocity_mass = .*/scale_with_velocity_mass = $scale_with_velocity_mass/" $filename
+
+echo "############################################" >> $outputfile
+echo "#######   Test update:       ###############" >> $outputfile
+echo "############################################" >> $outputfile
+echo "Cube: $cuboid, refinement level: $refinement, time step size: $timestep, Picard linearization: $picard, scaling: $weight" >> $outputfile
+mpirun -np 1 source/BoussinesqRepeatedUpdate -p $filename >> $outputfile
+
+# Cube, Picard, SIMPLE
+cuboid="true"
+refinement="4"
+timestep="0.005"
+picard="true"
+sed -i "s/cuboid geometry = .*/cuboid geometry = $cuboid/" $filename
+sed -i "s/global refinement = .*/global refinement = $refinement/" $filename
+sed -i "s/set time step = .*/set time step = $timestep/" $filename
+sed -i "s/use picard = .*/use picard = $picard/" $filename
+
+weight="1.0"
+sed -i "s/set weight = .*/set weight = $weight/" $filename
+schurprec="orig"
+sed -i "s/schur complement preconditioner = .*/schur complement preconditioner = $schurprec/" $filename
+
+echo "############################################" >> $outputfile
+echo "#######   Test update:       ###############" >> $outputfile
+echo "############################################" >> $outputfile
+echo "Cube: $cuboid, refinement level: $refinement, time step size: $timestep, Picard linearization: $picard, scaling: $weight" >> $outputfile
+mpirun -np 1 source/BoussinesqRepeatedUpdate -p $filename >> $outputfile
+
+###############################################
+## finer systems
+###############################################
+# Shell, Picard, LSC
+cuboid="false"
+refinement="4"
+timestep="0.00025"
+picard="true"
+sed -i "s/cuboid geometry = .*/cuboid geometry = $cuboid/" $filename
+sed -i "s/global refinement = .*/global refinement = $refinement/" $filename
+sed -i "s/set time step = .*/set time step = $timestep/" $filename
+sed -i "s/use picard = .*/use picard = $picard/" $filename
+
+weight="1.0"
+sed -i "s/set weight = .*/set weight = $weight/" $filename
+schurprec="bfbt"
+sed -i "s/schur complement preconditioner = .*/schur complement preconditioner = $schurprec/" $filename
+bfbt_scale="true" 
+scale_with_velocity_mass="true"
+sed -i "s/bfbt_scale = .*/bfbt_scale = $bfbt_scale/" $filename 
+sed -i "s/scale_with_velocity_mass = .*/scale_with_velocity_mass = $scale_with_velocity_mass/" $filename
+
+echo "############################################" >> $outputfile
+echo "#######   Test update:       ###############" >> $outputfile
+echo "############################################" >> $outputfile
+echo "Cube: $cuboid, refinement level: $refinement, time step size: $timestep, Picard linearization: $picard, scaling: $weight" >> $outputfile
+mpirun -np 1 source/BoussinesqRepeatedUpdate -p $filename >> $outputfile
+
+# Shell, Picard, SIMPLE
+cuboid="false"
+refinement="4"
+timestep="0.00025"
+picard="true"
+sed -i "s/cuboid geometry = .*/cuboid geometry = $cuboid/" $filename
+sed -i "s/global refinement = .*/global refinement = $refinement/" $filename
+sed -i "s/set time step = .*/set time step = $timestep/" $filename
+sed -i "s/use picard = .*/use picard = $picard/" $filename
+
+weight="1.0"
+sed -i "s/set weight = .*/set weight = $weight/" $filename
+schurprec="orig"
+sed -i "s/schur complement preconditioner = .*/schur complement preconditioner = $schurprec/" $filename
+
+echo "############################################" >> $outputfile
+echo "#######   Test update:       ###############" >> $outputfile
+echo "############################################" >> $outputfile
+echo "Cube: $cuboid, refinement level: $refinement, time step size: $timestep, Picard linearization: $picard, scaling: $weight" >> $outputfile
+mpirun -np 1 source/BoussinesqRepeatedUpdate -p $filename >> $outputfile
+
+# Cube, Picard, LSC
+cuboid="true"
+refinement="5"
+timestep="0.0025"
+picard="true"
+sed -i "s/cuboid geometry = .*/cuboid geometry = $cuboid/" $filename
+sed -i "s/global refinement = .*/global refinement = $refinement/" $filename
+sed -i "s/set time step = .*/set time step = $timestep/" $filename
+sed -i "s/use picard = .*/use picard = $picard/" $filename
+
+weight="1.0"
+sed -i "s/set weight = .*/set weight = $weight/" $filename
+schurprec="bfbt"
+sed -i "s/schur complement preconditioner = .*/schur complement preconditioner = $schurprec/" $filename
+bfbt_scale="true" 
+scale_with_velocity_mass="true"
+sed -i "s/bfbt_scale = .*/bfbt_scale = $bfbt_scale/" $filename 
+sed -i "s/scale_with_velocity_mass = .*/scale_with_velocity_mass = $scale_with_velocity_mass/" $filename
+
+echo "############################################" >> $outputfile
+echo "#######   Test update:       ###############" >> $outputfile
+echo "############################################" >> $outputfile
+echo "Cube: $cuboid, refinement level: $refinement, time step size: $timestep, Picard linearization: $picard, scaling: $weight" >> $outputfile
+mpirun -np 1 source/BoussinesqRepeatedUpdate -p $filename >> $outputfile
+
+# Cube, Picard, SIMPLE
+cuboid="true"
+refinement="5"
+timestep="0.0025"
+picard="true"
+sed -i "s/cuboid geometry = .*/cuboid geometry = $cuboid/" $filename
+sed -i "s/global refinement = .*/global refinement = $refinement/" $filename
+sed -i "s/set time step = .*/set time step = $timestep/" $filename
+sed -i "s/use picard = .*/use picard = $picard/" $filename
+
+weight="1.0"
+sed -i "s/set weight = .*/set weight = $weight/" $filename
+schurprec="orig"
+sed -i "s/schur complement preconditioner = .*/schur complement preconditioner = $schurprec/" $filename
+
+echo "############################################" >> $outputfile
+echo "#######   Test update:       ###############" >> $outputfile
+echo "############################################" >> $outputfile
+echo "Cube: $cuboid, refinement level: $refinement, time step size: $timestep, Picard linearization: $picard, scaling: $weight" >> $outputfile
+mpirun -np 1 source/BoussinesqRepeatedUpdate -p $filename >> $outputfile

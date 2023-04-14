@@ -1,0 +1,19 @@
+rm -rf CMakeFiles
+rm -rf CMakeCache.txt
+
+
+cmake \
+-DCMAKE_INSTALL_PREFIX=../install       \
+-DCMAKE_PREFIX_PATH="/path/to/p4est/install" \
+-DTRILINOS_LIBRARY=/path/to/Trilinos/build/lib/libtrilinosss.so \
+-DTRILINOS_DIR=/path/to/Trilinos/build \
+-DP4EST_LIBRARY="/path/to/lib64/libp4est.so" \
+-DLAPACK_DIR="/path/to/LAPACK" \
+-DBLAS_DIR="/path/to/BLAS" \
+-DDEAL_II_WITH_TRILINOS=ON              \
+-DDEAL_II_WITH_MPI=ON                   \
+-DDEAL_II_WITH_LAPACK=ON               \
+-DDEAL_II_WITH_UMFPACK=ON               \
+-DDEAL_II_WITH_P4EST=ON                 \
+..
+
